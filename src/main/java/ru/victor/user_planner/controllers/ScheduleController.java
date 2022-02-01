@@ -1,15 +1,12 @@
 package ru.victor.user_planner.controllers;
 
-
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.victor.user_planner.models.Schedule;
 import ru.victor.user_planner.services.ScheduleService;
 import ru.victor.user_planner.services.WorkerService;
-
-import javax.persistence.NonUniqueResultException;
+import java.sql.SQLException;
 
 @RestController
 public class ScheduleController {
@@ -23,8 +20,18 @@ public class ScheduleController {
     }
 
     @PostMapping("/schedule")
-    public @ResponseBody ResponseEntity<Schedule> addToSchedule(@RequestBody Schedule schedule) throws NonUniqueResultException {
+    public ResponseEntity<Schedule> addToSchedule(@RequestBody Schedule schedule) {
         scheduleService.addSchedule(schedule);
-        return new ResponseEntity<>(scheduleService.getScheduleWithId(schedule), HttpStatus.CREATED);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(scheduleService.getScheduleWithId(schedule));
+    }
+
+    @ExceptionHandler(value = SQLException.class)
+    public ResponseEntity<String> handleUniqueConstrain()  {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body("Too many work");
     }
 }
+

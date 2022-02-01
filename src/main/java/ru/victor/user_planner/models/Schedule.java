@@ -3,9 +3,7 @@ package ru.victor.user_planner.models;
 import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Calendar;
 
 @Entity
 @NoArgsConstructor

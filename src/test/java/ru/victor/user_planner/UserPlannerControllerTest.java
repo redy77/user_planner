@@ -17,10 +17,11 @@ import java.time.LocalDate;
 import java.util.Objects;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class UserPlannerController {
+public class UserPlannerControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
@@ -47,6 +48,17 @@ public class UserPlannerController {
         assertThat(response.getBody().getWorker(), equalTo(schedule.getWorker()));
         assertThat(response.getBody().getDate(), equalTo(schedule.getDate()));
         assertThat(response.getBody().getShift(), equalTo(schedule.getShift()));
+    }
+
+    @Test
+    public void testControllerTooManyWork(){
+        Worker worker = new Worker("Ivan");
+        workerRepo.save(worker);
+        Schedule schedule = new Schedule(LocalDate.of(2020, 5, 21), Schedule.Shift.SHIFT_from0_to8, worker);
+        Schedule schedule1 = new Schedule(LocalDate.of(2020, 5, 21), Schedule.Shift.SHIFT_from16_to24, worker);
+        restTemplate.postForEntity("/schedule", schedule, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity("/schedule", schedule1, String.class);
+        assertTrue(response.getBody().contains("Too many work"));
     }
 }
 

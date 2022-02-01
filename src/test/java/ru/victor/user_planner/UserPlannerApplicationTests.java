@@ -1,11 +1,9 @@
 package ru.victor.user_planner;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.GsonJsonParser;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.GsonTester;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -54,7 +52,7 @@ class UserPlannerApplicationTests {
 	}
 
 	@Test
-	void testAddToScheduleException() throws NonUniqueResultException {
+	void testAddToScheduleException() throws PSQLException {
 		Worker worker2 = new Worker("Klim");
 		workerService.addWorker(worker2);
 		Schedule schedule2 = new Schedule(LocalDate.of(2020, 12, 31), Schedule.Shift.SHIFT_from16_to24, worker2);
