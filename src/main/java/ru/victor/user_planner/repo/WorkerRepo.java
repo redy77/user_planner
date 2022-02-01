@@ -6,4 +6,5 @@ import ru.victor.user_planner.models.Worker;
 
 @Repository
 public interface WorkerRepo extends CrudRepository<Worker, Long> {
+    Worker searchByName(String name);
 }
