@@ -11,4 +11,5 @@ import java.time.LocalDate;
 public interface ScheduleRepo extends CrudRepository<Schedule, Long> {
     @Query(value = "SELECT e from Schedule e LEFT JOIN FETCH e.worker where e.worker.id = :worker and e.date = :date")
     Schedule searchScheduleByDateAndAndWorkerId(@Param("date") LocalDate date, @Param("worker")Long worker);
+
 }

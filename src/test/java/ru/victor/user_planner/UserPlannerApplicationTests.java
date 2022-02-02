@@ -51,7 +51,7 @@ class UserPlannerApplicationTests {
 		Assert.assertEquals(scheduleWithId1.getBody().getDate(), schedule1.getDate());
 	}
 
-	@Test
+	@Test()
 	void testAddToScheduleException() throws PSQLException {
 		Worker worker2 = new Worker("Klim");
 		workerService.addWorker(worker2);

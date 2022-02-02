@@ -1,6 +1,5 @@
 package ru.victor.user_planner;
 
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,10 @@ import ru.victor.user_planner.models.Schedule;
 import ru.victor.user_planner.models.Worker;
 import ru.victor.user_planner.repo.ScheduleRepo;
 import ru.victor.user_planner.repo.WorkerRepo;
+
 import java.time.LocalDate;
 import java.util.Objects;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertTrue;
@@ -31,13 +32,8 @@ public class UserPlannerControllerTest {
     @Autowired
     WorkerRepo workerRepo;
 
-    @After
-    public void resetDB(){
-        scheduleRepo.deleteAll();
-    }
-
     @Test
-    public void testControllerPost(){
+    public void testControllerPost() {
         Worker worker = new Worker("Ivan");
         workerRepo.save(worker);
         Schedule schedule = new Schedule(LocalDate.of(2020, 5, 21), Schedule.Shift.SHIFT_from0_to8,
@@ -51,7 +47,7 @@ public class UserPlannerControllerTest {
     }
 
     @Test
-    public void testControllerTooManyWork(){
+    public void testControllerTooManyWork() {
         Worker worker = new Worker("Ivan");
         workerRepo.save(worker);
         Schedule schedule = new Schedule(LocalDate.of(2020, 5, 21), Schedule.Shift.SHIFT_from0_to8, worker);
@@ -59,6 +55,21 @@ public class UserPlannerControllerTest {
         restTemplate.postForEntity("/schedule", schedule, String.class);
         ResponseEntity<String> response = restTemplate.postForEntity("/schedule", schedule1, String.class);
         assertTrue(response.getBody().contains("Too many work"));
+    }
+
+    @Test
+    public void testControllerUpdateSchedule() {
+        Worker worker = new Worker("Ivan");
+        workerRepo.save(worker);
+        Schedule schedule1 = new Schedule(LocalDate.of(2020, 5, 21), Schedule.Shift.SHIFT_from0_to8, worker);
+        ResponseEntity<Schedule> response1 = restTemplate.postForEntity("/schedule", schedule1, Schedule.class);
+        Schedule schedule2 = scheduleRepo.searchScheduleByDateAndAndWorkerId(LocalDate.of(2020, 5, 21), schedule1.getWorker().getId());
+        Schedule schedule3 = new Schedule(schedule2.getId(), schedule2.getDate(), Schedule.Shift.SHIFT_from16_to24, schedule2.getWorker());
+        restTemplate.put("/update_schedule", schedule3, Schedule.class);
+
+        System.out.println(scheduleRepo.searchScheduleByDateAndAndWorkerId(LocalDate.of(2020, 5, 21), schedule1.getWorker().getId()));
+        assertThat(response1.getBody().getShift(), equalTo(Schedule.Shift.SHIFT_from0_to8));
+        assertThat(scheduleRepo.searchScheduleByDateAndAndWorkerId(LocalDate.of(2020, 5, 21), schedule2.getWorker().getId()).getShift(), equalTo(Schedule.Shift.SHIFT_from16_to24));
     }
 }
 

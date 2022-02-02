@@ -1,5 +1,6 @@
 package ru.victor.user_planner.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import ru.victor.user_planner.models.Schedule;
@@ -12,14 +13,15 @@ import java.util.logging.Logger;
 @Service
 public class ScheduleService {
 
-    Logger logger = Logger.getLogger(ScheduleService.class.getName());
     private final ScheduleRepo scheduleRepo;
     private final WorkerService workerService;
+
 
     public ScheduleService(ScheduleRepo scheduleRepo, WorkerService workerService) {
         this.scheduleRepo = scheduleRepo;
         this.workerService = workerService;
     }
+
 
     @Transactional
     public void addSchedule(Schedule schedule) {
@@ -30,4 +32,10 @@ public class ScheduleService {
     public Schedule getScheduleWithId(Schedule schedule){
         return scheduleRepo.searchScheduleByDateAndAndWorkerId(schedule.getDate(), schedule.getWorker().getId());
     }
+
+    @Transactional
+    public void updateSchedule(Schedule schedule){
+        scheduleRepo.save(schedule);
+    }
+
 }

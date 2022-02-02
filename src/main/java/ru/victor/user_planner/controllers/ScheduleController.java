@@ -27,6 +27,14 @@ public class ScheduleController {
                 .body(scheduleService.getScheduleWithId(schedule));
     }
 
+    @PutMapping("/update_schedule")
+    public ResponseEntity<Schedule> updateSchedule(@RequestBody Schedule schedule){
+        scheduleService.updateSchedule(schedule);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(scheduleService.getScheduleWithId(schedule));
+    }
+
     @ExceptionHandler(value = SQLException.class)
     public ResponseEntity<String> handleUniqueConstrain()  {
         return ResponseEntity
