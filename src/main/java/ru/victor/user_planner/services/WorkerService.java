@@ -18,10 +18,4 @@ public class WorkerService {
     public void addWorker(Worker worker){
         workerRepo.save(worker);
     }
-
-    public Worker searchWorkerByName(String name){
-        return workerRepo.searchByName(name);
-    }
-
-
 }

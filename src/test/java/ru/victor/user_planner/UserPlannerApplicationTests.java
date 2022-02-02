@@ -5,25 +5,15 @@ import org.junit.jupiter.api.Test;
 import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.json.GsonTester;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.web.JsonPath;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ru.victor.user_planner.controllers.ScheduleController;
 import ru.victor.user_planner.models.Schedule;
 import ru.victor.user_planner.models.Worker;
-import ru.victor.user_planner.services.ScheduleService;
 import ru.victor.user_planner.services.WorkerService;
-import javax.persistence.NonUniqueResultException;
 import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.springframework.http.RequestEntity.post;
+
 
 @SpringBootTest
 class UserPlannerApplicationTests {

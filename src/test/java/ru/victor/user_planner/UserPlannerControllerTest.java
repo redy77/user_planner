@@ -5,14 +5,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.victor.user_planner.models.Schedule;
 import ru.victor.user_planner.models.Worker;
 import ru.victor.user_planner.repo.ScheduleRepo;
 import ru.victor.user_planner.repo.WorkerRepo;
-
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -63,13 +61,14 @@ public class UserPlannerControllerTest {
         workerRepo.save(worker);
         Schedule schedule1 = new Schedule(LocalDate.of(2020, 5, 21), Schedule.Shift.SHIFT_from0_to8, worker);
         ResponseEntity<Schedule> response1 = restTemplate.postForEntity("/schedule", schedule1, Schedule.class);
-        Schedule schedule2 = scheduleRepo.searchScheduleByDateAndAndWorkerId(LocalDate.of(2020, 5, 21), schedule1.getWorker().getId());
+        Schedule schedule2 = scheduleRepo.findByDateAndAndWorkerId(LocalDate.of(2020, 5, 21), schedule1.getWorker().getId());
         Schedule schedule3 = new Schedule(schedule2.getId(), schedule2.getDate(), Schedule.Shift.SHIFT_from16_to24, schedule2.getWorker());
-        restTemplate.put("/update_schedule", schedule3, Schedule.class);
+        HttpEntity<Schedule> request = new HttpEntity<>(schedule3);
+        ResponseEntity<Schedule> response2 = restTemplate.exchange("/update_schedule", HttpMethod.PUT, request, Schedule.class);
 
-        System.out.println(scheduleRepo.searchScheduleByDateAndAndWorkerId(LocalDate.of(2020, 5, 21), schedule1.getWorker().getId()));
         assertThat(response1.getBody().getShift(), equalTo(Schedule.Shift.SHIFT_from0_to8));
-        assertThat(scheduleRepo.searchScheduleByDateAndAndWorkerId(LocalDate.of(2020, 5, 21), schedule2.getWorker().getId()).getShift(), equalTo(Schedule.Shift.SHIFT_from16_to24));
+        assertThat(response2.getBody().getShift(), equalTo(Schedule.Shift.SHIFT_from16_to24));
+        assertThat(response1.getBody().getId(), equalTo(response2.getBody().getId()));
     }
 }
 

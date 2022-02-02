@@ -1,5 +1,6 @@
 package ru.victor.user_planner.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
@@ -21,6 +22,7 @@ public class Schedule implements Serializable {
     @Enumerated(EnumType.STRING)
     private Shift shift;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     private Worker worker;
 
