@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
-import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.victor.user_planner.models.Schedule;
 import ru.victor.user_planner.models.Worker;
@@ -14,7 +13,6 @@ import ru.victor.user_planner.repo.ScheduleRepo;
 import ru.victor.user_planner.repo.WorkerRepo;
 import java.time.LocalDate;
 import java.util.Objects;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertTrue;

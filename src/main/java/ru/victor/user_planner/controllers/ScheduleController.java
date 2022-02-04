@@ -37,19 +37,6 @@ public class ScheduleController {
                 .body(scheduleService.getScheduleWithId(schedule));
     }
 
-    @ExceptionHandler(value = PSQLException.class)
-    public ResponseEntity<String> handleUniqueConstrain()  {
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body("Too many work");
-    }
-
-    @ExceptionHandler(value = NotFoundScheduleException.class)
-    public ResponseEntity<String> handlerNotFoundSchedule(){
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body("Schedule not found");
-    }
 
 }
 
