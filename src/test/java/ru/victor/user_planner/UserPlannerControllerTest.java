@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
+import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.victor.user_planner.models.Schedule;
 import ru.victor.user_planner.models.Worker;
@@ -69,6 +70,17 @@ public class UserPlannerControllerTest {
         assertThat(response1.getBody().getShift(), equalTo(Schedule.Shift.SHIFT_from0_to8));
         assertThat(response2.getBody().getShift(), equalTo(Schedule.Shift.SHIFT_from16_to24));
         assertThat(response1.getBody().getId(), equalTo(response2.getBody().getId()));
+    }
+
+    @Test
+    public void testExceptionControllerUpdateSchedule(){
+        Worker worker = new Worker("Ivan");
+        workerRepo.save(worker);
+        Schedule schedule1 = new Schedule(LocalDate.of(2020, 5, 21), Schedule.Shift.SHIFT_from0_to8, worker);
+        HttpEntity<Schedule> request = new HttpEntity<>(schedule1);
+        ResponseEntity<String> response = restTemplate.exchange("/update_schedule", HttpMethod.PUT, request, String.class);
+        System.out.println(response);
+       assertTrue(response.getBody().equals("Schedule not found"));
     }
 }
 
