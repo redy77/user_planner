@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.victor.user_planner.exeptions.NotFoundScheduleException;
+import ru.victor.user_planner.exeptions.NotFoundScheduleIDException;
 
 @ControllerAdvice
 public class ControllerHandlers {
@@ -22,5 +23,12 @@ public class ControllerHandlers {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body("Schedule not found");
+    }
+
+    @ExceptionHandler(value = NotFoundScheduleIDException.class)
+    public ResponseEntity<String> handlerNotFoundIDSchedule(){
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body("Schedule must be with ID");
     }
 }

@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
@@ -78,7 +79,7 @@ public class UserPlannerControllerTest {
         HttpEntity<Schedule> request = new HttpEntity<>(schedule1);
         ResponseEntity<String> response = restTemplate.exchange("/update_schedule", HttpMethod.PUT, request, String.class);
         System.out.println(response);
-       assertTrue(response.getBody().equals("Schedule not found"));
+        assertEquals("Schedule must be with ID", response.getBody());
     }
 }
 

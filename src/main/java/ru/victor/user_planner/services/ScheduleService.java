@@ -2,6 +2,7 @@ package ru.victor.user_planner.services;
 
 import org.springframework.stereotype.Service;
 import ru.victor.user_planner.exeptions.NotFoundScheduleException;
+import ru.victor.user_planner.exeptions.NotFoundScheduleIDException;
 import ru.victor.user_planner.models.Schedule;
 import ru.victor.user_planner.repo.ScheduleRepo;
 import javax.transaction.Transactional;
@@ -34,8 +35,8 @@ public class ScheduleService {
     }
 
     @Transactional
-    public void updateSchedule(Schedule schedule) throws NotFoundScheduleException{
-        if (schedule.getId() == null) throw new NotFoundScheduleException();
+    public void updateSchedule(Schedule schedule) throws NotFoundScheduleIDException {
+        if (schedule.getId() == null) throw new NotFoundScheduleIDException();
         scheduleRepo.save(schedule);
     }
 
