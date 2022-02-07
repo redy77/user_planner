@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.victor.user_planner.exeptions.NotFoundScheduleException;
 import ru.victor.user_planner.exeptions.NotFoundScheduleIDException;
-
 import java.util.NoSuchElementException;
 
 @ControllerAdvice

@@ -8,7 +8,6 @@ import ru.victor.user_planner.exeptions.NotFoundScheduleException;
 import ru.victor.user_planner.exeptions.NotFoundScheduleIDException;
 import ru.victor.user_planner.models.Schedule;
 import ru.victor.user_planner.services.ScheduleService;
-import ru.victor.user_planner.services.WorkerService;
 
 @RestController
 public class ScheduleController {
