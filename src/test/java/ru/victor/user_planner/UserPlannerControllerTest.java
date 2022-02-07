@@ -52,7 +52,7 @@ public class UserPlannerControllerTest {
         Schedule schedule1 = new Schedule(LocalDate.of(2020, 5, 21), Schedule.Shift.SHIFT_from16_to24, worker);
         restTemplate.postForEntity("/schedule", schedule, String.class);
         ResponseEntity<String> response = restTemplate.postForEntity("/schedule", schedule1, String.class);
-        assertTrue(response.getBody().contains("Too many work"));
+        assertTrue(response.getBody().contains("Too much work"));
     }
 
     @Test

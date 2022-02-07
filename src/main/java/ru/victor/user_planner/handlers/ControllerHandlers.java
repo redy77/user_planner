@@ -15,7 +15,7 @@ public class ControllerHandlers {
     public ResponseEntity<String> handleUniqueConstrain()  {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body("Too many work");
+                .body("Too much work");
     }
 
     @ExceptionHandler(value = NotFoundScheduleException.class)
