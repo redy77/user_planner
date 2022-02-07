@@ -18,4 +18,8 @@ public class WorkerService {
     public void addWorker(Worker worker){
         workerRepo.save(worker);
     }
+
+    public Worker getWorker(Long id){
+       return workerRepo.findById(id).get();
+    }
 }

@@ -6,7 +6,7 @@ import ru.victor.user_planner.exeptions.NotFoundScheduleIDException;
 import ru.victor.user_planner.models.Schedule;
 import ru.victor.user_planner.repo.ScheduleRepo;
 import javax.transaction.Transactional;
-import java.sql.SQLException;
+import java.util.NoSuchElementException;
 
 @Service
 public class ScheduleService {
@@ -23,12 +23,14 @@ public class ScheduleService {
 
     @Transactional
     public void addSchedule(Schedule schedule) {
+        if(schedule.getWorker().getId() == null) throw new NoSuchElementException();
+        workerService.getWorker(schedule.getWorker().getId());
             scheduleRepo.save(schedule);
     }
 
     @Transactional
     public Schedule getScheduleWithId(Schedule schedule) throws NotFoundScheduleException{
-        Schedule scheduleWithId = null;
+        Schedule scheduleWithId;
             scheduleWithId = scheduleRepo.findByDateAndAndWorkerId(schedule.getDate(), schedule.getWorker().getId());
             if (scheduleWithId == null) throw new NotFoundScheduleException();
         return scheduleWithId;

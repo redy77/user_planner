@@ -9,14 +9,13 @@ import ru.victor.user_planner.exeptions.NotFoundScheduleIDException;
 import ru.victor.user_planner.models.Schedule;
 import ru.victor.user_planner.services.ScheduleService;
 import ru.victor.user_planner.services.WorkerService;
-import java.sql.SQLException;
 
 @RestController
 public class ScheduleController {
 
     private final ScheduleService scheduleService;
 
-    public ScheduleController(ScheduleService scheduleService, WorkerService workerService) {
+    public ScheduleController(ScheduleService scheduleService) {
         this.scheduleService = scheduleService;
     }
 

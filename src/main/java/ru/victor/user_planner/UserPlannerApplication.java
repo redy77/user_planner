@@ -10,6 +10,5 @@ public class UserPlannerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(UserPlannerApplication.class, args);
-	}
-
+	}//TODO Сделать DTO
 }

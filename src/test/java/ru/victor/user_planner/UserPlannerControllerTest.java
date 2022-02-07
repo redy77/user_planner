@@ -81,5 +81,14 @@ public class UserPlannerControllerTest {
         System.out.println(response);
         assertEquals("Schedule must be with ID", response.getBody());
     }
+
+    @Test
+    public void testExceptionWorkerNotFound(){
+        Worker worker = new Worker("Ivan");
+        Schedule schedule = new Schedule(LocalDate.of(2020, 5, 21), Schedule.Shift.SHIFT_from0_to8, worker);
+        restTemplate.postForEntity("/schedule", schedule, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity("/schedule", schedule, String.class);
+        assertEquals("The worker is not registered", response.getBody());
+    }
 }
 
