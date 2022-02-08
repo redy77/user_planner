@@ -7,12 +7,14 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.victor.user_planner.exeptions.NotFoundScheduleException;
 import ru.victor.user_planner.exeptions.NotFoundScheduleIDException;
+import ru.victor.user_planner.exeptions.WorkerIsNotExist;
+
 import java.util.NoSuchElementException;
 
 @ControllerAdvice
 public class ControllerHandlers {
 
-    @ExceptionHandler(value = NoSuchElementException.class)
+    @ExceptionHandler(value = WorkerIsNotExist.class)
     public ResponseEntity<String> emptyWork()  {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)

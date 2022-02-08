@@ -3,6 +3,7 @@ package ru.victor.user_planner.services;
 import org.springframework.stereotype.Service;
 import ru.victor.user_planner.exeptions.NotFoundScheduleException;
 import ru.victor.user_planner.exeptions.NotFoundScheduleIDException;
+import ru.victor.user_planner.exeptions.WorkerIsNotExist;
 import ru.victor.user_planner.models.Schedule;
 import ru.victor.user_planner.repo.ScheduleRepo;
 import javax.transaction.Transactional;
@@ -23,7 +24,7 @@ public class ScheduleService {
 
     @Transactional
     public void addSchedule(Schedule schedule) {
-        if(schedule.getWorker().getId() == null) throw new NoSuchElementException();
+        if(schedule.getWorker().getId() == null) throw new WorkerIsNotExist();
         workerService.getWorker(schedule.getWorker().getId());
             scheduleRepo.save(schedule);
     }

@@ -17,6 +17,6 @@ public class SwaggersConfigs {
         return new OpenAPI()
                 .info(new Info().title("User planner")
                         .version("01")
-                        .description("РSchedule of work shifts"));
+                        .description("Schedule of work shifts"));
     }
 }
